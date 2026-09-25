@@ -1,6 +1,6 @@
 ---
 name: skill-designer
-description: Design, author, and structure high-quality agent skills as reusable SKILL.md workflows. Use when creating a new skill, building a skill from docs or sources, restructuring an existing skill, fixing skill triggers, or reviewing skill quality. Triggers (de): "Skill erstellen", "Skill bauen", "Skill-Designer", "Skill verbessern", "Skill-Struktur". Takes precedence over domain skills when the request is to author a skill for any domain (e.g. "create a skill for release notes" routes here, not to a changelog skill). Not for installing existing skills or for one-off commands without a reusable workflow (skill-writer covers deep upstream references).
+description: Design, author, and structure high-quality agent skills as reusable SKILL.md workflows. Use when creating a new skill, building a skill from docs or sources, restructuring an existing skill, fixing skill triggers, or reviewing skill quality. Triggers (de): "Skill erstellen", "Skill entwerfen", "Skill bauen", "Skill strukturieren", "Skill-Designer", "Skill verbessern", "Skill-Struktur ueberpruefen". Takes precedence over domain skills when the request is to author a skill for any domain (e.g. "create a skill for release notes" routes here, not to a changelog skill). Not for installing existing skills or for one-off commands without a reusable workflow (skill-writer covers deep upstream references).
 risk: safe
 source: self
 ---
