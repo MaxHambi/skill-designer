@@ -12,7 +12,10 @@
 [CmdletBinding()]
 param(
   [int]$Id = 0,
-  [switch]$DryRun
+  [switch]$DryRun,
+  # Grade an externally produced reply file instead of running claude.
+  # Same deterministic grader; use with -Id. Requires -Id > 0.
+  [string]$GradeFile = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -38,11 +41,17 @@ foreach ($e in $evals) {
   $tmp = New-Item -ItemType File -Path (Join-Path $env:TEMP "sd-eval-$($e.id)-$PID.md") -Force
   try {
     # Headless run: the skill is provided as system prompt context, reply to a file.
-    $skillBody = Get-Content (Join-Path $root 'skills\skill-designer\SKILL.md') -Raw
-    $prompt = "Follow this skill workflow exactly:`n`n$skillBody`n`nTask:`n$($e.prompt)"
-    claude -p $prompt --output-format text > $tmp.FullName
-    if ($LASTEXITCODE -ne 0) { throw "claude CLI exited with $LASTEXITCODE" }
-    $reply = Get-Content $tmp.FullName -Raw
+    if ($GradeFile) {
+      Write-Host "  grading external reply: $GradeFile (no claude run)"
+      $reply = Get-Content $GradeFile -Raw
+    }
+    else {
+      $skillBody = Get-Content (Join-Path $root 'skills\skill-designer\SKILL.md') -Raw
+      $prompt = "Follow this skill workflow exactly:`n`n$skillBody`n`nTask:`n$($e.prompt)"
+      $null | claude -p $prompt --output-format text > $tmp.FullName
+      if ($LASTEXITCODE -ne 0) { throw "claude CLI exited with $LASTEXITCODE" }
+      $reply = Get-Content $tmp.FullName -Raw
+    }
 
     # Deterministic keyword grader: each expectation is graded by its salient
     # tokens appearing in the reply (transcript-based grading approximation).
