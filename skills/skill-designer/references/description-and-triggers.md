@@ -49,6 +49,22 @@ Examples for a skill-authoring skill:
 3. Record residual overlap as an open gap in the closeout report.
 4. Do not stack two meta-routers for the same domain; pick one canonical workflow and reference the other as upstream deep-dive.
 
+## Case study: the skill-writer collision (resolved)
+
+Real catalog case that shaped the rules above - treat it as the worked example when applying the anti-collision check:
+
+- **Before:** `skill-writer` described itself as "Create and improve agent skills... Use when asked to create, write, or update skills" - a generic claim directly overlapping skill-designer's vocabulary, while its body still opened with "single canonical workflow". Two skills claimed the same routing surface.
+- **Symptom:** generic skill-authoring requests had two plausible targets; neither description said which one wins. The stale body claim could not help: routing decides at description level before any body loads.
+- **Resolution (description level, not body):** skill-writer's description was narrowed to "Upstream deep-dive reference for skill design... Use only when explicitly requested by name (skill-writer) or when editing skill-writer's own reference files. Not the default workflow for creating, building, structuring, or reviewing skills - skill-designer owns that." A one-sentence coexistence note replaced the stale canonical claim in the body. No skill was renamed.
+- **Verification (three-way test against the routing index):** generic create request -> skill-designer (0.809; skill-writer not in top 3). Improve/restructure request -> skill-designer (0.748; skill-writer absent). Explicit-name request -> skill-writer (0.743; skill-designer only third). Post-resolution pairwise description similarity 0.412 - under the 0.50 warn line and now enforced by this repository's Tier-2 collision check.
+
+Lessons generalized:
+
+1. A body claim ("canonical workflow") cannot repair a description-level collision; fix the description.
+2. Narrow one side's vocabulary instead of renaming either skill; stable names keep references working.
+3. Verify with three queries: one generic variant per claimed surface plus one explicit-name query for the demoted skill.
+4. Check the resolution into evals so drift (e.g. an upstream sync restoring the old description) fails CI instead of silently reintroducing the collision.
+
 ## Description checklist
 
 - [ ] Starts with what (third person, domain + artifact + action).
