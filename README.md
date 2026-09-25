@@ -74,6 +74,23 @@ The skill's bilingual trigger surface (English + German) means it activates on p
 - Quality: 6-dimension depth rubric (trigger precision, workflow completeness, safety boundaries, output determinism, validation strength, progressive disclosure) — pass/partial/fail.
 - Behavioral: should-trigger and should-not-trigger query sets routed through the index, hits and misses documented.
 
+## Evals & benchmark
+
+The repository ships a three-tier eval suite adapted from the [agent-skills eval framework](https://github.com/addyosmani/agent-skills/blob/main/evals/README.md) (which adopts Anthropic skill-creator's `evals.json` schema):
+
+| Tier | Checks | Runner | Cost |
+|---|---|---|---|
+| 1. Structural | Frontmatter, anatomy sections, length limits, references | `node scripts/run-evals.js` | Free, CI |
+| 2. Trigger & routing | Positive prompts rank top-k against the real peer catalog; negatives are pairwise owner-outranks tests; description-collision check | `node scripts/run-evals.js` | Free, CI |
+| 3. Behavioral | An agent following the skill satisfies the case's `expectations[]` | `pwsh scripts/run-behavioral.ps1` | Tokens, on demand |
+
+```bash
+node scripts/run-evals.js --min-rank1 95   # deterministic gate (currently 20/20, rank-1 100%)
+pwsh scripts/run-behavioral.ps1 -DryRun    # plan only; drop -DryRun to spend tokens
+```
+
+Tier 1+2 run in CI on every push/PR touching the skill (`.github/workflows/evals.yml`). See [evals/README.md](evals/README.md) for the case format, the non-strict negative rule for semantic siblings, and what counts as proven quality.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

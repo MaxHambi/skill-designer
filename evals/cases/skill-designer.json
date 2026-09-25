@@ -1,0 +1,80 @@
+{
+  "skill_name": "skill-designer",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Create a skill that reviews our pull requests for breaking changes",
+        "top_k": 1
+      },
+      {
+        "prompt": "I want to turn our onboarding checklist into a reusable agent skill",
+        "top_k": 3
+      },
+      {
+        "prompt": "This skill never fires when I say 'entwerfe einen Skill' - can you fix its triggers?",
+        "top_k": 3
+      },
+      {
+        "prompt": "Ich moechte einen Skill entwerfen, der Projekteinschaetzungen macht",
+        "top_k": 3
+      },
+      {
+        "prompt": "Our skill lacks verification steps and a rationalizations table - restructure it",
+        "top_k": 3
+      },
+      {
+        "prompt": "Check this SKILL.md against the skill anatomy standard",
+        "top_k": 3
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Welcher Skill passt hierfuer - ich brauche Orientierung, was es gibt",
+        "owner": "using-skills",
+        "strict": false
+      },
+      {
+        "prompt": "Entkopple das geklonte Projekt und richte ein privates GitHub-Repository ein",
+        "owner": "init-private"
+      },
+      {
+        "prompt": "Generate the changelog and release notes for the 1.2.0 release",
+        "owner": "changelog-automation"
+      }
+    ],
+    "peer_description_overrides": {
+      "init-private": "Entkoppelt ein geklontes Projekt, installiert Abhängigkeiten und initialisiert ein isoliertes privates GitHub-Repository. Verwende diesen Skill, wenn ein Projekt lokal neu aufgesetzt oder von seiner ursprünglichen Git-Historie getrennt werden soll."
+    }
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Design and author a new agent skill called release-lint that checks commit messages and changelog entries for a monorepo before every push. Follow your skill-designer workflow end to end, including mode selection, description and trigger design, anatomy compliance, and validation planning. Do not create any files; present the design as the workflow's output contract (Summary, Changes Made, Validation Results, Open Gaps).",
+      "expected_output": "A complete skill-designer closeout report for the release-lint skill: mode selected with justification, a what+when description with bilingual trigger surface and should/should-not-trigger sets, the full anatomy section flow (Overview, When to Use, Core Process, Common Rationalizations, Red Flags, Verification) drafted for release-lint, structural limits respected, a validation plan with concrete proof mechanisms, and honest open gaps.",
+      "expectations": [
+        "The response selects and states an operation mode (create/update/synthesize/iterate) for the release-lint task",
+        "The response drafts a description for release-lint in what+when form with trigger conditions, and includes both English and German trigger phrases",
+        "The response presents should-trigger and should-not-trigger query sets for release-lint",
+        "The response drafts or references all anatomy-mandatory sections for release-lint: Overview or Purpose, When to Use, Core Process, Common Rationalizations, Red Flags, Verification, Limitations",
+        "The response states a verification or validation plan where each criterion has a concrete proof mechanism (command, output, or artifact), not abstract claims",
+        "The response follows the skill-designer output contract with the four sections: Summary, Changes Made, Validation Results, Open Gaps",
+        "The response names at least one residual open gap or limitation rather than claiming the design is complete without caveats"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "An existing skill called pdf-cleanup has a 900-line SKILL.md, no verification section, no trigger sets, and its description says 'helps with productivity'. Diagnose what is wrong with it and propose the smallest set of fixes. Do not create any files; answer in the skill-designer output contract.",
+      "expected_output": "A diagnosis in skill-designer's iteration vocabulary (instruction gap, validation gap, trigger/description defect, context-efficiency violation) and a minimal patch plan: move detail to references, add evidence-based Verification, add should/should-not-trigger sets, rewrite the description in what+when form; resolve on description level, not the body.",
+      "expectations": [
+        "The response identifies the 900-line SKILL.md as a context-efficiency violation and proposes moving detail into references rather than only trimming",
+        "The response identifies the missing Verification section as a validation gap and requires evidence-based criteria",
+        "The response identifies the vague description as a trigger defect and rewrites or proposes a what+when replacement",
+        "The response proposes should-trigger and should-not-trigger query sets as part of the fix",
+        "The response frames fixes as the smallest set of scoped changes (minimal patch) rather than a full rewrite of unrelated content",
+        "The response follows the four-section output contract: Summary, Changes Made, Validation Results, Open Gaps"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+name: evals
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'skills/skill-designer/**'
+      - 'evals/**'
+      - 'scripts/run-evals.js'
+      - '.github/workflows/evals.yml'
+  pull_request:
+    paths:
+      - 'skills/skill-designer/**'
+      - 'evals/**'
+      - 'scripts/run-evals.js'
+      - '.github/workflows/evals.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  tier1-tier2:
+    name: Tier 1 structural + Tier 2 trigger/routing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run deterministic evals (enforce rank-1 floor)
+        run: node scripts/run-evals.js --min-rank1 95
