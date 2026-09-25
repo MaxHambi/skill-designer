@@ -9,7 +9,7 @@ source: self
 
 Design, author, and restructure agent skills to a single canonical standard: the process discipline of `skill-writer` (modes, synthesis gates, iteration, depth rubric) merged with the structural standard of the addyosmani agent-skills anatomy (frontmatter contract, section flow, anti-rationalization, context efficiency, model neutrality). skill-designer is the canonical local workflow; `skill-writer` remains the upstream deep-dive reference.
 
-## Purpose
+## Overview
 
 One workflow that turns a task, a docs page, or an existing skill into a skill that:
 
@@ -17,6 +17,17 @@ One workflow that turns a task, a docs page, or an existing skill into a skill t
 - carries a verifiable Definition of Done in the skill itself,
 - resists rationalization (Common Rationalizations table + Red Flags),
 - stays context-efficient (SKILL.md under 500 lines, references one level deep).
+
+## When to Use
+
+- Creating a new skill from a task, workflow, docs page, or set of sources.
+- Restructuring an existing skill that lacks verification, rationalization guards, or trigger precision.
+- Diagnosing why a skill misfires (triggers too often, not often enough, or routes wrong).
+- Reviewing a skill against the anatomy standard.
+
+## Core Process
+
+Seven ordered steps; each routes depth into one reference. Combine steps only where the mode table says so.
 
 ## Step 1 - Resolve target and mode
 
@@ -85,12 +96,34 @@ Return:
 3. `Validation Results`
 4. `Open Gaps`
 
-## When to Use
+## Common Rationalizations
 
-- Creating a new skill from a task, workflow, docs page, or set of sources.
-- Restructuring an existing skill that lacks verification, rationalization guards, or trigger precision.
-- Diagnosing why a skill misfires (triggers too often, not often enough, or routes wrong).
-- Reviewing a skill against the anatomy standard.
+| Rationalization | Reality |
+|---|---|
+| "The task is obvious, I can write the SKILL.md directly" | Skipping synthesis is how blind spots ship; run the coverage checklist first. |
+| "The description is good enough without should/should-not-trigger sets" | Unvalidated descriptions misroute; routing decides at description level before any body loads. |
+| "Verification checkboxes can stay abstract" | A criterion without a proof mechanism is a failed criterion, not a check. |
+| "The old skill works, restructuring adds churn" | Missing rationalization guards, red flags, or verification are exactly the failure modes this workflow exists to fix. |
+| "I'll run the trigger tests later" | Untested skills misroute silently; test against the index before closeout. |
+
+## Red Flags
+
+- SKILL.md exceeds 500 lines or references chain deeper than one level.
+- The description summarizes process steps instead of stating what + when.
+- No should-trigger / should-not-trigger sets documented for the skill.
+- Verification items lack a named proof (command, output, artifact).
+- Two sibling skills share trigger vocabulary without an explicit precedence note.
+- A step is justified only by naming a specific model or runtime tool (model neutrality violation).
+
+## Verification
+
+- [ ] Frontmatter parses: name matches directory, description present (regex check).
+- [ ] Description is 1024 characters or fewer (length check output documented).
+- [ ] SKILL.md is under 500 lines (line count documented).
+- [ ] Every referenced file exists (path-existence check per reference).
+- [ ] Depth rubric scored on all 6 dimensions, none fail.
+- [ ] 3-6 should-trigger and 3-6 should-not-trigger queries tested against the index, results documented.
+- [ ] Index refreshed (scan_skills or skills-sync) after the last edit.
 
 ## Limitations
 
